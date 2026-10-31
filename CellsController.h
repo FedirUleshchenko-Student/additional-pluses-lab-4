@@ -43,7 +43,7 @@ public:
 	std::string getCellInteraction();
 private:
 	std::mt19937_64 _gen;
-	Cell _c1, _c2;
+	Cell _c0, _c1;
 
 	const long double _probToString = 0;
 	const long double _totalProb = 0;

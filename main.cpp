@@ -15,32 +15,38 @@
 using namespace std;
 using namespace std::filesystem;
 
-// needed ??
-//int main(int argc, char* argv[])
 int main() {
 	try {
-		if (exists(path("input")) && is_directory(path("input")))
-			cout << "COC" << endl;
+		string nameType[3] = { "opt", "eql", "bad" };
 
-		bool rewrite = true;
+		// Pseudo code - START
+		{
+			bool rewrite = true;
+			CellsController(* const data[3])() = {
+				 getClassicProbabilityData,
+				 getEqualProbabilityData,
+				 getWorstProbabilityData,
+			};
 
-		//Generator::getInstance().tryCreateTestBlock(5, rewrite, "medium ", 1e4, 1e4, "opt", getClassicProbabilityData());
-		//Generator::getInstance().tryCreateTestBlock(5, rewrite, "big ", 1e6, 1e6, "opt", getClassicProbabilityData());
-		Generator::getInstance().tryCreateTestBlock(5, rewrite, "large ", 1e9, 1e9, "opt", getClassicProbabilityData());
-		//Generator::getInstance().tryCreateTestBlock(5, rewrite, "medium ", 1e4, 1e4, "eql", getEqualProbabilityData());
-		//Generator::getInstance().tryCreateTestBlock(5, rewrite, "big ", 1e6, 1e6, "eql", getEqualProbabilityData());
-		Generator::getInstance().tryCreateTestBlock(5, rewrite, "large ", 1e9, 1e9, "eql", getEqualProbabilityData());
-		//Generator::getInstance().tryCreateTestBlock(5, rewrite, "medium ", 1e4, 1e4, "bad", getWorstProbabilityData());
-		//Generator::getInstance().tryCreateTestBlock(5, rewrite, "big ", 1e6, 1e6, "bad", getWorstProbabilityData());
-		Generator::getInstance().tryCreateTestBlock(5, rewrite, "large ", 1e9, 1e9, "bad", getWorstProbabilityData());
+			for (int i = 0; i < 3; i++) {
+				Generator::getInstance().tryCreateTestBlock(15, rewrite, "small", 1e2, 1e2, nameType[i], data[i]());
+				Generator::getInstance().tryCreateTestBlock(15, rewrite, "medium", 3e4, 3e4, nameType[i], data[i]());
+				Generator::getInstance().tryCreateTestBlock(5, rewrite, "big", 1e6, 1e6, nameType[i], data[i]());
+			}
+		}
+		// Pseudo code - END
 
-		auto x = Tester::measureAllProbDataTests(
-			"input\\opt",
-			"input\\eql",
-			"input\\bad"
+		auto testData = Tester::measureAllProbDataTests(
+			format("input\\{}", nameType[0]),
+			format("input\\{}", nameType[1]),
+			format("input\\{}", nameType[2])
 		);
 
-		cout << string(x) << endl;
+		for (auto& [key, val] : testData) {
+			Tester::outputBlockMeasurements(cout, key, val);
+			cout << "\n\n" << endl;
+		}
+		Tester::outputTotalMeasurements(cout, testData);
 
 	}
 	catch (exception e) {

@@ -18,8 +18,8 @@ CellsController::CellsController(
 	long double prob1_read, long double prob1_write,
 	long double prob2_read, long double prob2_write,
 	long double prob_string) :
-	_c1(prob1_read, prob1_write), _c2(prob2_read, prob2_write),
-	_probToString(prob_string), _totalProb(_c1.ptot + _c2.ptot + _probToString),
+	_c0(prob1_read, prob1_write), _c1(prob2_read, prob2_write),
+	_probToString(prob_string), _totalProb(_c0.ptot + _c1.ptot + _probToString),
 	_gen(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) {}
 
 CellsController::DSInteraction::DSInteraction(ACT type, dataT arg_id, dataT arg_value) :
@@ -47,16 +47,16 @@ CellsController::DSInteraction CellsController::getCellInteraction(std::istream&
 
 string CellsController::getCellInteraction() {
 	long double t = (std::uniform_real_distribution<long double>(0.0, _totalProb))(_gen); // threshold
-	if (t < _c1.ptot) {
-		if (t < _c1.pr) return "read 1";
-		return ("write 1 " + to_string(++_c1));
+	if (t < _c0.ptot) {
+		if (t < _c0.pr) return "read 0";
+		return ("write 0 " + to_string(++_c0));
 	}
 	
 	t -= _c1.ptot;
 
-	if (t < _c2.ptot) {
-		if (t < _c2.pr) return "read 2";
-		return ("write 2 " + to_string(++_c2));
+	if (t < _c1.ptot) {
+		if (t < _c1.pr) return "read 1";
+		return ("write 1 " + to_string(++_c1));
 	}
 	return "string";
 }

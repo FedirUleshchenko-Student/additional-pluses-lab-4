@@ -18,7 +18,7 @@ CellsController getEqualProbabilityData() {
 
 // TODO
 CellsController getWorstProbabilityData() {
-	return CellsController(0.01, 0.03, 0.01, 0.45, 0.50);
+	return CellsController(0.00, 0.99, 0.00, 0.01, 0.00);
 }
 
 Generator::Generator() : _gen(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) {}
@@ -71,13 +71,13 @@ void Generator::createTestBlock(
 	for (int i = 1; i <= testFilesCnt; i++) {
 
 		//auto temp_dir = dir / path(format("{}{} - 1", namePrefix, i));
-		auto temp_dir = dir / path(format("{}{}", namePrefix, i)) / path(format("{} threads", 1));
+		auto temp_dir = dir / path(format("{}\\{}", namePrefix, i)) / path(format("{} threads", 1));
 		if (!is_directory(temp_dir)) create_directories(temp_dir);
 
 		string file = create1WorkerSubtask(rand(_gen), temp_dir, manager);
 
 		for (int th = 2; th <= MTEST; th++) {
-			auto curr_dir = dir / path(format("{}{}", namePrefix, i)) / path(format("{} threads", th));
+			auto curr_dir = dir / path(format("{}\\{}", namePrefix, i)) / path(format("{} threads", th));
 
 			copyWorkerSubtask(th, file, curr_dir);
 		}
