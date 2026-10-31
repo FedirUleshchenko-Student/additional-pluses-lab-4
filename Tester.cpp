@@ -119,8 +119,8 @@ Tester::BlockMeasurement Tester::measureAllTests(path dir) {
 Tester::Measurements Tester::measureAllProbDataTests(
 	std::filesystem::path opt, std::filesystem::path eql, std::filesystem::path bad) {
 	return Measurements(
-		measureSingleBlock(opt),
-		measureSingleBlock(eql),
-		measureSingleBlock(bad)
+		measureAllTests(opt),
+		measureAllTests(eql),
+		measureAllTests(bad)
 	);
 }
