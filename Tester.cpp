@@ -44,6 +44,7 @@ void Tester::threadFunc(std::ifstream& is, DS& ds, bool& isError) {
 Tester::BlockMeasurement Tester::measureSingleTest(path testBlock) {
 	DS ds = DS();
 	BlockMeasurement ans;
+	ans.testsCnt = 1;
 
 	{
 		bool isError = false;

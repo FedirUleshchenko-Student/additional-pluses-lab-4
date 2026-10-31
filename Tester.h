@@ -23,7 +23,7 @@ public:
 	//static Tester& getInstance();
 
 	struct BlockMeasurement {
-		size_t testsCnt = 1;
+		size_t testsCnt = 0;
 		
 		// averages
 
