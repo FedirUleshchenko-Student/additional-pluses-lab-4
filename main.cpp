@@ -21,7 +21,7 @@ int main() {
 
 		// Pseudo code - START
 		{
-			bool rewrite = true;
+			bool rewrite = false;
 			CellsController(* const data[3])() = {
 				 getClassicProbabilityData,
 				 getEqualProbabilityData,
@@ -31,7 +31,7 @@ int main() {
 			for (int i = 0; i < 3; i++) {
 				Generator::getInstance().tryCreateTestBlock(15, rewrite, "small", 1e2, 1e2, nameType[i], data[i]());
 				Generator::getInstance().tryCreateTestBlock(15, rewrite, "medium", 3e4, 3e4, nameType[i], data[i]());
-				Generator::getInstance().tryCreateTestBlock(5, rewrite, "big", 1e6, 1e6, nameType[i], data[i]());
+				Generator::getInstance().tryCreateTestBlock(15, rewrite, "big", 1e6, 1e6, nameType[i], data[i]());
 			}
 		}
 		// Pseudo code - END

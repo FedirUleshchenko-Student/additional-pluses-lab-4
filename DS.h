@@ -17,8 +17,7 @@ public:
 	inline void clear() { for (int i = 0; i < MDAT; i++) a[i] = 0; }
 private:
 	dataT a[MDAT];
-	mutable std::shared_mutex _cell0;
-	mutable std::mutex _cell1;
+	mutable std::shared_mutex _mutex[MDAT];
 private:
 	inline void _checkPos(size_t &position) const;
 	dataT _get0() const;

@@ -21,22 +21,22 @@ void DS::set(size_t position, dataT data) {
 }
 
 dataT DS::_get0() const {
-	shared_lock lk(_cell0);
+	shared_lock lk(_mutex[0]);
 	return a[0];
 }
 
 dataT DS::_get1() const {
-	lock_guard lk(_cell1);
+	shared_lock lk(_mutex[1]);
 	return a[1];
 }
 
 void DS::_set0(dataT data) {
-	lock_guard lk(_cell0);
+	lock_guard lk(_mutex[0]);
 	a[0] = data;
 }
 
 void DS::_set1(dataT data) {
-	lock_guard lk(_cell1);
+	lock_guard lk(_mutex[1]);
 	a[1] = data;
 }
 
@@ -46,8 +46,8 @@ void DS::_checkPos(size_t& position) const {
 }
 
 DS::operator std::string() const {
-	shared_lock lk0(_cell0, defer_lock);
-	unique_lock lk1(_cell1, defer_lock);
+	shared_lock lk0(_mutex[0], defer_lock);
+	shared_lock lk1(_mutex[1], defer_lock);
 	lock(lk0, lk1);
 	string ans="[";
 	for (size_t i = 0; i < MDAT; i++)

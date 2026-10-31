@@ -15,10 +15,10 @@ dataT CellsController::Cell::operator++() {
 }
 
 CellsController::CellsController(
+	long double prob0_read, long double prob0_write,
 	long double prob1_read, long double prob1_write,
-	long double prob2_read, long double prob2_write,
 	long double prob_string) :
-	_c0(prob1_read, prob1_write), _c1(prob2_read, prob2_write),
+	_c0(prob0_read, prob0_write), _c1(prob1_read, prob1_write),
 	_probToString(prob_string), _totalProb(_c0.ptot + _c1.ptot + _probToString),
 	_gen(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) {}
 
